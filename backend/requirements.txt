@@ -6,7 +6,6 @@ openai
 python-dotenv
 python-multipart
 numpy
-contextlib
 pydantic
 dotenv
 sentence-transformers
