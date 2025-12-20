@@ -13,6 +13,5 @@ sentence-transformers
 torch
 scikit-learn
 data_loader
-contextlib
 os
 ast
