@@ -1,0 +1,519 @@
+/* ========================================= */
+/* 1. 홈(Home)과 100% 동일한 기본 설정       */
+/* ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: inherit;
+}
+
+/* ★ 핵심: 헤더 영역과 본문 영역의 규격을 강제로 통일 ★ */
+.main-container,
+.page-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+/* ========================================= */
+/* 2. 헤더 스타일 (Home.css 복사)            */
+/* ========================================= */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 0 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.header .logo h1,
+.header .logo a {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.header .navigation ul {
+    display: flex;
+    gap: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.header .login-button a,
+.header .profile-section button,
+#logout-button {
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    color: #333;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ========================================= */
+/* 3. 검색창 섹션 (Home.css 복사)            */
+/* ========================================= */
+.search-section {
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar {
+    display: flex;
+    width: 50%;
+    min-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    overflow: hidden;
+    background-color: #fff;
+    height: 50px;
+}
+
+.search-bar input {
+    flex-grow: 1;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 0 20px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar button svg {
+    stroke: #555;
+    width: 20px;
+    height: 20px;
+}
+
+/* ========================================= */
+/* 4. 본문 레이아웃 (좌: 필터, 우: 결과)     */
+/* ========================================= */
+.page-wrapper {
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 80px;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* --- 사이드바 (필터) --- */
+.sidebar {
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.filters {
+    margin-bottom: 25px;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group button {
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #888;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 5px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+}
+
+.filter-group button:hover {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.filter-group button.active {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.sidebar .search-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #333;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* --- 검색 결과 영역 --- */
+.main-content {
+    flex: 1;
+}
+
+.results-section h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* ========================================= */
+/* [수정됨] 영화 카드 및 프로필 동그라미 스타일 */
+/* ========================================= */
+.movie-card {
+    display: flex;
+    background-color: white;
+    border-radius: 12px; /* 둥글기 수정 */
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eee;
+    
+    /* 높이를 늘려서 프로필 공간 확보 (기존 180px -> 230px) */
+    height: 230px; 
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.movie-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.movie-poster {
+    width: 140px; /* 포스터 너비 약간 증가 */
+    height: 100%;
+    object-fit: cover;
+    background-color: #eee;
+    border-right: 1px solid #f0f0f0;
+}
+
+.movie-info {
+    flex: 1;
+    padding: 15px 20px;
+    
+    /* 텍스트(위)와 프로필(아래)를 양 끝으로 배치 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+/* 상단 정보 (제목, 설명) */
+.movie-info .info-top h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.movie-info .info-top .desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    
+    /* 줄거리 3줄 말줄임 */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.movie-info .hashtags {
+    font-size: 12px;
+    color: #007bff;
+    font-weight: 500;
+}
+
+/* 하단 프로필 동그라미 영역 */
+.people-list {
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px solid #f1f1f1; /* 구분선 */
+    display: flex;
+    align-items: center;
+    gap: 12px; /* 동그라미 사이 간격 */
+}
+
+.people-list .label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #888;
+    margin-right: 5px;
+}
+
+/* 프로필 동그라미 버튼 */
+.profile-circle {
+    width: 48px;  /* 크기 조절 */
+    height: 48px;
+    border-radius: 50%; /* 완전한 원형 */
+    border: 2px solid #e0e0e0; /* 회색 테두리 */
+    padding: 2px; /* 테두리와 이미지 사이 간격 */
+    background-color: white;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    
+    /* 버튼 내부 정렬 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-circle img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* 마우스 올렸을 때 효과 */
+.profile-circle:hover {
+    border-color: #007bff; /* 파란색 테두리 */
+    transform: scale(1.1); /* 확대 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.profile-circle:active {
+    transform: scale(0.95);
+}
+
+/* ========================================= */
+/* 5. 채팅 모달 (기존 기능 유지)             */
+/* ========================================= */
+.chat-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.chat-modal.hidden { display: none; }
+
+.chat-container {
+    width: 400px;
+    height: 600px;
+    background: #fff;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.chat-header {
+    background: #333;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.movie-badge {
+    font-size: 0.8rem;
+    background: #555;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+
+.close-btn { color: white; font-size: 24px; }
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message { display: flex; }
+.message.user { justify-content: flex-end; }
+.message.bot { justify-content: flex-start; }
+
+.bubble {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.message.user .bubble {
+    background: #007bff;
+    color: white;
+    border-bottom-right-radius: 2px;
+}
+
+.message.bot .bubble {
+    background: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    border-bottom-left-radius: 2px;
+}
+
+.chat-input-area {
+    padding: 15px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    gap: 10px;
+}
+
+#chat-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+}
+
+#send-btn {
+    padding: 8px 16px;
+    background: #007bff;
+    color: white;
+    border-radius: 20px;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 900px) {
+    .page-wrapper { flex-direction: column; }
+    .sidebar { width: 100%; margin-bottom: 20px; }
+    .results-grid { grid-template-columns: 1fr; }
+    .search-bar { width: 90%; }
+    
+    /* 모바일에서 카드 높이 자동 조절 */
+    .movie-card {
+        height: auto;
+        min-height: 220px;
+    }
+    
+    .people-list {
+        flex-wrap: wrap;
+    }
+}
+
+/* 등장인물 선택 영역 */
+.character-selection {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.char-title {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 8px;
+    padding-left: 2px;
+}
+
+/* 프로필 가로 나열 */
+.char-list {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 2px;
+}
+
+/* 개별 캐릭터 (사진+이름) */
+.char-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    width: 60px; /* 크기 고정 */
+}
+
+/* 프로필 사진 (원형) */
+.char-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover; /* 이미지가 찌그러지지 않게 */
+    border: 2px solid #e0e0e0;
+    background-color: #fff;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+/* 마우스 올렸을 때 효과 */
+.char-item:hover .char-avatar {
+    transform: scale(1.1);
+    border-color: #007bff;
+}
+
+.char-name {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+    white-space: nowrap;     /* 줄바꿈 방지 */
+    overflow: hidden;        /* 넘치는 글자 숨김 */
+    text-overflow: ellipsis; /* ... 처리 */
+    width: 100%;
+}
+
+/* 채팅방 헤더 이미지 스타일 보강 */
+#chat-header-img {
+    border: 2px solid rgba(255, 255, 255, 0.7); /* 테두리 추가 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 헤더 레이아웃 조정 */
+.chat-header {
+    /* 기존 스타일 아래에 flex 관련 설정이 있는지 확인 후 조정 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding 등 기존 스타일 유지 */
+}

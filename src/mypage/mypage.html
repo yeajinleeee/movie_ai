@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>마이페이지 - 대본너머</title>
+<link rel="stylesheet" href="/src/home/home.css">
+<link rel="stylesheet" href="/src/mypage/mypage.css">
+</head>
+<body>
+
+<div class="main-container">
+    <header class="header">
+        <div class="logo">
+            <a href="/"><h1>대본너머</h1></a> </div>
+
+        <nav class="navigation">
+        <ul>
+            <li><a href="/">홈</a></li> 
+            <li><a href="#">영화</a></li>
+            <li><a href="/talk">대화</a></li> 
+            <li><a href="#">토론</a></li>
+        </ul>
+        </nav>
+
+        <div class="login-button" id="login-section">
+            <a href="/login" id="login-button">로그인</a> </div>
+
+        <div class="profile-section" id="profile-section" style="display: none;">
+            <a href="/mypage" id="nickname-container"></a> <button id="logout-button">로그아웃</button>
+        </div>
+    </header>
+
+    <main class="mypage-container">
+        <div class="profile-top-actions">
+            <button class="icon-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="17" y1="11" x2="23" y2="11"></line></svg>
+            </button>
+            <button class="icon-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </button>
+        </div>
+
+        <section class="profile-info">
+            <div class="profile-image">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+                <div class="profile-details">
+                    <h2 class="profile-name" id="user-profile-name">로딩 중...</h2>
+                    <p class="profile-email" id="user-profile-email">이메일 정보 없음</p>
+                    <div class="profile-follow">
+                        <span>팔로워 <strong id="user-followers-count">-</strong></span>
+                        <span>팔로잉 <strong id="user-following-count">-</strong></span>
+                    </div>  
+                </div>
+        </section>
+
+        <section class="profile-actions">
+            <button class="action-button">프로필 수정</button>
+            <button class="action-button">프로필 공유</button>
+        </section>
+
+        <section class="profile-stats">
+            <div class="stat-item">
+                <span class="stat-count">0</span>
+                <span class="stat-label">평가</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-count">0</span>
+                <span class="stat-label">코멘트</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-count">0</span>
+                <span class="stat-label">컬렉션</span>
+            </div>
+        </section>
+
+        <section class="library">
+            <h3 class="library-title">보관함</h3>
+            <div class="library-grid">
+                <div class="library-item">
+                    <div class="library-icon-bg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#828282" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                    </div>
+                    <span class="library-label">영화</span>
+                </div>
+                <div class="library-item">
+                    <div class="library-icon-bg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#828282" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+                    </div>
+                    <span class="library-label">시리즈</span>
+                </div>
+                <div class="library-item">
+                    <div class="library-icon-bg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#828282" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    </div>
+                    <span class="library-label">책</span>
+                </div>
+                <div class="library-item">
+                    <div class="library-icon-bg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#828282" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    </div>
+                    <span class="library-label">웹툰</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    </div>
+
+<script type="module" src="/src/home/script(home).js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대본너머</title>
+<link rel="stylesheet" href="/src/talk/talk.css">
+<script type="module" src="/src/talk/script(talk).js" defer></script>
+</head>
+
+<div id="chat-modal" class="chat-modal hidden">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img id="chat-header-img" src="" alt="프로필" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; background:#fff;">
+                    
+                    <h2 id="chat-character-name" style="margin: 0;">캐릭터이름</h2>
+            </div>
+
+    <span id="chat-movie-title" style="font-size: 0.8em; color: #eee;">영화제목</span>
+
+    <button id="close-chat-btn" style="background:none; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
+</div>
+
+            <div id="chat-messages" class="chat-messages">
+                <div class="message bot">
+                    <div class="bubble">안녕하세요! 대화를 시작해보세요.</div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="말을 걸어보세요..." autocomplete="off">
+                <button id="send-btn">전송</button>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
+
+<body>
+    <div class="main-container">
+        <header class="header">
+            <div class="logo">
+                <a href="/"><h1>대본너머</h1></a>
+            </div>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="/">홈</a></li>
+                    <li><a href="#">영화</a></li>
+                    <li><a href="/talk">대화</a></li>
+                    <li><a href="#">토론</a></li>
+                </ul>
+            </nav>
+            <div class="login-button" id="login-section">
+                <a href="/login" id="login-button-link">로그인</a>
+            </div>
+            <div class="profile-section" id="profile-section" style="display: none;">
+                <a href="/mypage" id="nickname-container"></a>
+                <button id="logout-button">로그아웃</button>
+            </div>
+        </header>
+        <section class="search-section">
+            <div class="search-bar">
+                <input type="text" placeholder="등장 인물, 배우 이름, 영화 제목 검색" id="talk-search-input">
+                <button type="submit">
+                    <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 21L16.65 16.65" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <div class="page-wrapper talk-layout">
+        <main class="main-content">
+            
+            <section class="filters">
+                <div class="filter-group" id="year-filter">
+                    <button>2004 - 2006</button>
+                    <button>2007 - 2009</button>
+                    <button>2010 - 2012</button>
+                    <button>2013 - 2015</button>
+                    <button>2016 - 2018</button>
+                    <button>2019 - 2021</button>
+                    <button>2022 - 2024</button>
+                </div>
+                <div class="filter-group" id="genre-filter">
+                    <button>스릴러</button>
+                    <button>로맨스</button>
+                    <button>드라마</button>
+                    <button>음악&뮤지컬</button>
+                    <button>코미디</button>
+                    <button>액션</button>
+                </div>            
+            </section>
+
+            <section class="results-section">
+                <h2>검색 결과</h2>
+                <div class="results-grid">
+                </div> 
+            </section>
+        </main>
+
+        <aside class="sidebar">
+            <button class="search-button">영화 검색</button>
+        </aside>
+    </div> </body>
+</html>

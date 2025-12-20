@@ -1,0 +1,312 @@
+/* ========================================= */
+/* 1. 기본 리셋 & 공통 스타일 (Home/Talk 통일) */
+/* ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f8f9fa; /* 배경색 통일 */
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: inherit;
+}
+
+/* 전체 레이아웃 (1100px 중앙 정렬) */
+.main-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ========================================= */
+/* 2. 헤더 스타일 (다른 페이지와 똑같이 맞춤) */
+/* ========================================= */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    margin-bottom: 30px; /* 헤더 아래 여백 */
+    border-bottom: 1px solid #eee; /* 헤더 구분선 */
+    background-color: #f8f9fa; /* 배경색 */
+}
+
+.header .logo h1, 
+.header .logo a {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.header .navigation ul {
+    display: flex;
+    gap: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.header .login-button a,
+.header .profile-section button,
+#logout-button {
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.header .login-button a:hover,
+#logout-button:hover {
+    background-color: #f1f3f5;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ========================================= */
+/* 3. 마이페이지 컨텐츠 영역 */
+/* ========================================= */
+.mypage-container {
+    max-width: 600px; /* 프로필은 너무 넓지 않게 중앙 집중 */
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 16px;
+    border: 1px solid #eee;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    margin-bottom: 80px;
+}
+
+/* 상단 아이콘 (설정 등) */
+.profile-top-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.profile-top-actions .icon-button {
+    color: #888;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.profile-top-actions .icon-button:hover {
+    background-color: #f1f3f5;
+    color: #333;
+}
+
+/* 프로필 정보 (사진, 이름, 팔로우) */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.profile-image {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    background-color: #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image svg {
+    width: 40px;
+    height: 40px;
+    stroke: #adb5bd;
+}
+
+.profile-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.profile-email {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.profile-follow {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.profile-follow strong {
+    color: #333;
+    font-weight: bold;
+}
+
+/* 프로필 수정 버튼 영역 */
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.profile-actions .action-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.profile-actions .action-button:hover {
+    background-color: #f8f9fa;
+    border-color: #ccc;
+}
+
+/* 통계 (평가, 코멘트, 컬렉션) */
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%;
+    cursor: pointer;
+}
+
+.stat-count {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #888;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 24px;
+    background-color: #eee;
+}
+
+/* 보관함 (Grid 레이아웃) */
+.library {
+    text-align: left;
+}
+
+.library-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-left: 5px;
+}
+
+.library-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4열 배치 */
+    gap: 15px;
+}
+
+.library-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.library-icon-bg {
+    width: 60px;
+    height: 60px;
+    background-color: #f8f9fa;
+    border-radius: 20px; /* 둥근 사각형 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    transition: background 0.2s;
+}
+
+.library-item:hover .library-icon-bg {
+    background-color: #e9ecef;
+}
+
+.library-icon-bg svg {
+    stroke: #555;
+    width: 28px;
+    height: 28px;
+}
+
+.library-label {
+    font-size: 13px;
+    color: #555;
+    font-weight: 500;
+}
+
+/* ========================================= */
+/* 4. 반응형 (모바일) */
+/* ========================================= */
+@media (max-width: 600px) {
+    .mypage-container {
+        padding: 20px;
+        margin: 0 15px 40px 15px; /* 좌우 여백 */
+    }
+    
+    .library-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+    }
+    
+    .library-icon-bg {
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+    }
+    
+    .library-icon-bg svg {
+        width: 24px;
+        height: 24px;
+    }
+}

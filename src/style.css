@@ -1,0 +1,214 @@
+/* ------------------------------------ */
+/* 1. 공통 스타일 */
+/* ------------------------------------ */
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* ------------------------------------ */
+/* 2. 메인 페이지 스타일 */
+/* ------------------------------------ */
+
+.main-container {
+    max-width: 1290px;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px 40px 80px 40px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.navigation ul {
+    display: flex;
+    gap: 30px;
+}
+
+.navigation a {
+    font-size: 18px;
+}
+
+.login-button a {
+    border: 1px solid #e0e0e0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#logout-button {
+    border: 1px solid #e0e0e0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* 닉네임과 버튼 사이 간격 */
+}
+
+/* 닉네임 링크 스타일 */
+.profile-section a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profile-section a:hover {
+    text-decoration: underline;
+}
+
+.search-section {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 70%;
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 0 20px;
+    box-sizing: border-box; /* 패딩이 크기에 영향을 주지 않도록 설정 */
+}
+
+.search-bar input {
+    width: 100%;
+    height: 100%;
+    border: none; /* 기본 테두리 제거 */
+    outline: none; /* 클릭 시 생기는 파란 테두리 제거 */
+    font-size: 16px;
+    background-color: transparent; /* 배경색 투명하게 */
+}
+
+.search-bar button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer; /* 마우스를 올리면 손가락 모양으로 변경 */
+}
+
+/* --- 3. 슬라이더(히어로) 영역 --- */
+.hero-slider {
+    max-width: 1100px;
+    aspect-ratio: 16/9;
+    background-image: url('image/엑시트 와이드 포스터.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 0 20px;
+    justify-content: center;
+}
+
+/* --- 4. 영화 둘러보기 영역 --- */
+.movie-list-section h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+}
+
+.slider-container {
+    position: relative; /* 화살표 버튼을 절대 위치로 배치하기 위한 기준 */
+    width: 90%;
+    margin: 50px auto;
+    max-width: 1200px;
+}
+
+/* 영화 목록 섹션 (보여지는 프레임 역할) */
+.movie-list-selection {
+    overflow: hidden;
+}
+
+/* 실제로 움직이는 영화 카드들의 래퍼 */
+.movie-list-wrapper {
+    display: flex; /* 영화 카드들을 가로로 나란히 배치 */
+    transition: transform 0.5s ease-in-out; /* 부드러운 슬라이드 효과 */
+    /* JavaScript에서 transform: translateX() 속성을 변경하여 슬라이드 효과를 줌 */
+}
+
+.movie-card {
+    flex: 0 0 24%;
+    margin: 0 0.5%;
+}
+
+.movie-card img {
+    width: 100%;
+    display: block;
+}
+
+/* 화살표 버튼 공통 스타일 */
+.arrow {
+    position: absolute; /* slider-container를 기준으로 위치 설정 */
+    top: 55%;
+    transform: translateY(-50%); /* 수직으로 정확히 중앙에 배치 */
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10; /* 다른 요소들 위에 보이도록 설정 */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.movie-info h3 {
+    font-size: 18px;
+    margin: 12px 0 4px 0;
+}
+
+.movie-info p {
+    font-size: 14px;
+    color: #555;
+    margin: 4px 0;
+}
+
+/* 왼쪽, 오른쪽 화살표 위치 */
+.arrow.prev-arrow  {
+    left: -25px;
+}
+
+.arrow.next-arrow {
+    right: -25px;
+}
+
+.arrow:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}

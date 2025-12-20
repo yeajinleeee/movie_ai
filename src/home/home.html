@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대본너머</title>
+    <link rel="stylesheet" href="/src/home/home.css">
+<body>
+    <div class="main-container">
+        <header class="header">
+            <div class="logo">
+                <a href="/src/home/home.html"><h1>대본너머</h1></a>
+            </div>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="/">홈</a></li>
+                    <li><a href="#">영화</a></li>
+                    <li><a href="/talk">대화</a></li>
+                    <li><a href="#">토론</a></li>
+                </ul>
+            </nav>
+            <div class="login-button" id="login-section">
+                <a href="/login" id="login-button-link">로그인</a>
+            </div>
+            <div class="profile-section" id="profile-section" style="display: none;">
+                <a href="/mypage" id="nickname-container"></a>
+                <button id="logout-button">로그아웃</button>
+            </div>
+        </header>
+
+        <section class="search-section">
+            <div class="search-bar">
+                <input type="text" placeholder="등장 인물, 배우 이름, 영화 제목 검색">
+                <button type="submit">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M21 21L16.65 16.65" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <section class="hero-slider">
+            <div class="slide-content">
+                </div>
+        </section>
+
+        <section class="movie-list-section" id="recent-movies-section">
+            <h2>영화 둘러보기</h2>
+            <div class="slider-container">
+                <div class="slider-frame">
+                    <div class="movie-list-wrapper">
+                        </div>
+                </div>
+                <button class="arrow prev-arrow">&lt;</button>
+                <button class="arrow next-arrow">&gt;</button>
+            </div>
+        </section>
+
+        <section class="movie-list-section" id="genre-movies-section">
+            <h2>장르별 보기</h2>
+            <div class="genre-tabs">
+                <button class="tab-button active" data-genre="스릴러">스릴러</button>
+                <button class="tab-button" data-genre="로맨스">로맨스</button>
+                <button class="tab-button" data-genre="드라마">드라마</button>
+                <button class="tab-button" data-genre="음악">음악 & 뮤지컬</button>
+                <button class="tab-button" data-genre="코미디">코미디</button>
+                <button class="tab-button" data-genre="액션">액션</button>
+            </div>
+            <div class="slider-container">
+                <div class="slider-frame">
+                    <div class="movie-list-wrapper">
+                        </div>
+                </div>
+                <button class="arrow prev-arrow">&lt;</button>
+                <button class="arrow next-arrow">&gt;</button>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="/src/home/script(home).js" defer></script>
+</body>
+</html>
