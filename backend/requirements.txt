@@ -28,3 +28,6 @@ tqdm
 typing_extensions
 uvicorn
 zipp
+sentence-transformers
+torch
+scikit-learn
