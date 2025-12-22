@@ -1,0 +1,10 @@
+// config.js
+export const ENV = {
+    FIREBASE_API_KEY: "AIzaSyDAvPeGUlnIZhgmrM2Dx3CGumiJ8xSEKxw",
+    FIREBASE_AUTH_DOMAIN: "movie-ai-14f76.firebaseapp.com",
+    FIREBASE_PROJECT_ID: "movie-ai-14f76",
+    FIREBASE_STORAGE_BUCKET: "movie-ai-14f76.firebasestorage.app",
+    FIREBASE_MESSAGING_SENDER_ID: "753806653539",
+    FIREBASE_APP_ID: "1:753806653539:web:dc818f69f6052e84b36056",
+    FIREBASE_MEASUREMENT_ID: "G-DWPK63LTYQ"
+};

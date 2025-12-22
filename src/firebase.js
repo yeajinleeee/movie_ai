@@ -1,3 +1,5 @@
+import { ENV } from './config.js';
+
 // Firebase App 모듈 가져오기
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
 
@@ -20,15 +22,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 // (중요) Firebase 프로젝트 설정 값
-// 이 값들은 사용자님의 Firebase 프로젝트에서 가져온 것입니다.
 const firebaseConfig = {
-    apiKey: "AIzaSyDAvPeGUlnIZhgmrM2Dx3CGumiJ8xSEKxw",
-    authDomain: "movie-ai-14f76.firebaseapp.com",
-    projectId: "movie-ai-14f76",
-    storageBucket: "movie-ai-14f76.firebasestorage.app",
-    messagingSenderId: "753806653539",
-    appId: "1:753806653539:web:dc818f69f6052e84b36056",
-    measurementId: "G-DWPK63LTYQ"
+    apiKey: ENV.FIREBASE_API_KEY,
+    authDomain: ENV.FIREBASE_AUTH_DOMAIN,
+    projectId: ENV.FIREBASE_PROJECT_ID,
+    storageBucket: ENV.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: ENV.FIREBASE_MESSAGING_SENDER_ID,
+    appId: ENV.FIREBASE_APP_ID,
+    measurementId: ENV.FIREBASE_MEASUREMENT_ID
 };
 
 // --- Firebase 서비스 초기화 ---
