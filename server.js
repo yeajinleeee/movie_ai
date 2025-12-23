@@ -125,30 +125,25 @@ app.get('/api/search', async (req, res) => {
 
 
 app.post('/api/talk', async (req, res) => {
-    // 프론트엔드에서 보낸 데이터 받기
-    const { movieId, characterName, userMessage } = req.body;
+    try { // 👈 catch가 있으려면 try 블록이 반드시 있어야 합니다!
+        // 1. 프론트엔드에서 보낸 데이터 받기 (여기 변수명을 잘 보세요)
+        const { movieId, characterName, userMessage } = req.body;
 
-    console.log(`[Node.js] 챗봇 요청 받음: ${characterName}에게 "${userMessage}"`);
+        console.log(`[Node.js] 챗봇 요청 받음: ${characterName}에게 "${userMessage}"`);
 
-    // Python FastAPI 서버 주소 (기본 포트 8000)
-    const PYTHON_API_URL = 'http://127.0.0.1:8000/chat';
-
-    try {
-        // 1. Python 서버로 요청 전달 (Fetch 사용)
-        const response = await fetch(PYTHON_API_URL, {
+        // 2. Python FastAPI 서버로 요청 (response 뒤에 = 추가)
+        const response = await fetch('http://127.0.0.1:8000/api/talk', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            // Python의 Pydantic 모델(ChatRequest) 필드명과 일치시켜야 함
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                movie_id: movieId,      // 예: 'extreme_job'
-                character: characterName, // 예: '고반장'
-                message: userMessage
-            }),
+                // 🔥 중요: 위에서 받은 변수명(movieId 등)을 그대로 써야 합니다!
+                movieId: movieId,        
+                characterName: characterName,
+                userMessage: userMessage
+            })
         });
 
-        // 2. Python 서버 응답 처리
+        // 3. Python 서버 응답 처리
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`Python Server Error: ${response.status} - ${errorText}`);
@@ -156,7 +151,7 @@ app.post('/api/talk', async (req, res) => {
 
         const data = await response.json(); // { reply: "..." }
 
-        // 3. 프론트엔드로 결과 반환
+        // 4. 프론트엔드로 결과 반환
         res.json(data);
 
     } catch (error) {

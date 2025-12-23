@@ -36,6 +36,9 @@ MOVIE_TITLES = {
     '1987' : '1987',
     'dogani': '도가니',
     'theking': '더킹',
+    'sunny': '써니 (2011)',
+    'tazza': '타짜:원아이드잭',
+    'veteran':'베테랑',
 }
 
 # 2. 헬퍼 함수
@@ -140,45 +143,30 @@ async def chat_endpoint(request: ChatRequest):
 async def talk_page():
     return FileResponse(os.path.join(SRC_DIR, "talk/talk.html"))
 
-@app.get("/api/characters/{movie_id}")
+@app.get("/api/characters/{movie_id}") # 또는 "/characters/{movie_id}"로 통일
 def get_characters(movie_id: str):
     data = movies_db.get(movie_id)
-    if not data: return {"characters": []}
+    if not data: 
+        return {"characters": []}
     
     char_list = data.get("characters", [])
     character_info_list = []
     
-    # ★ [핵심] 한글 이름 -> 영어 파일명 연결표
-    # 파일 이름을 영어로 바꾸고 여기에 적어주면 됩니다.
-    FILENAME_MAP = {
-        "고반장": "goban.jpg",
-        "장형사": "jang.jpg",
-    }
-
-    print(f"--- [{movie_id}] 이미지 찾기 시작 ---") 
-
     for name in char_list:
-        image_url = "" 
+        # 공백 제거 후 이미지 파일명 생성 (예: "서 도철" -> "서도철.jpg")
+        clean_name = name.replace(" ", "")
+        image_url = ""
         
-        # 1. 연결표에 있는 영어 파일 먼저 찾기
-        if name in FILENAME_MAP:
-            eng_filename = FILENAME_MAP[name]
-            # 경로: data/extreme_job/goban.jpg
-            file_path = os.path.join(DATA_PATH, movie_id, eng_filename)
-            
-            print(f"  검사: {file_path}")
-            
+        # 실제 파일이 있는지 체크하는 로직
+        exts = ['jpg', 'png', 'jpeg']
+        for ext in exts:
+            file_name = f"{clean_name}.{ext}"
+            file_path = os.path.join(DATA_PATH, movie_id, file_name)
             if os.path.exists(file_path):
-                image_url = f"/images/{movie_id}/{eng_filename}"
-                print(f"  -> 성공! ({eng_filename})")
+                image_url = f"/images/{movie_id}/{file_name}"
+                break
         
-        # 2. 연결표에 없으면 원래대로 한글 파일 찾기 (혹시 모르니 유지)
-        if image_url == "":
-            base_path = os.path.join(DATA_PATH, movie_id, name)
-            if os.path.exists(f"{base_path}.jpg"): image_url = f"/images/{movie_id}/{name}.jpg"
-            elif os.path.exists(f"{base_path}.png"): image_url = f"/images/{movie_id}/{name}.png"
-            elif os.path.exists(f"{base_path}.jpeg"): image_url = f"/images/{movie_id}/{name}.jpeg"
-
+        # 이미지가 없으면 기본 아바타 이미지나 빈 문자열 전달
         character_info_list.append({"name": name, "image": image_url})
 
     return {"characters": character_info_list}
@@ -186,6 +174,21 @@ def get_characters(movie_id: str):
 @app.get("/characters/{movie_id}")
 def get_characters_legacy(movie_id: str):
     return get_characters(movie_id)
+
+# 영화 목록을 반환하는 API 추가
+@app.get("/api/movies")
+def get_movie_list():
+    # 실제로 로드된 폴더명(tazza, veteran 등) 리스트
+    loaded_movie_ids = list(movies_db.keys())
+    
+    movie_list = []
+    for m_id in loaded_movie_ids:
+        movie_list.append({
+            "id": m_id,
+            "title": MOVIE_TITLES.get(m_id, m_id) # 별칭이 없으면 폴더명 그대로 사용
+        })
+    
+    return {"movies": movie_list}
 
 print("\n========== [파일 확인] ==========")
 target_folder = "data/extreme_job"
@@ -196,3 +199,4 @@ if os.path.exists(target_folder):
 else:
     print(f"❌ 폴더가 없습니다: {target_folder}")
 print("=================================\n")
+

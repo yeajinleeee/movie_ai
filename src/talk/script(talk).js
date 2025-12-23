@@ -9,7 +9,9 @@ const movieMap = {
     '암수살인': 'DarkFigureofCrime',
     '1987' : '1987',
     '도가니': 'dogani',
-    '더킹': 'theking'
+    '더킹': 'theking',
+    '타짜:원아이드잭': 'tazza',
+    '베테랑':'veteran',
 };
 
 // 현재 대화 세션 정보 저장
