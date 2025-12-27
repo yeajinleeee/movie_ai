@@ -132,7 +132,7 @@ app.post('/api/talk', async (req, res) => {
         console.log(`[Node.js] 챗봇 요청 받음: ${characterName}에게 "${userMessage}"`);
 
         // 2. Python FastAPI 서버로 요청 (response 뒤에 = 추가)
-        const response = await fetch('http://127.0.0.1:8000/api/talk', {
+        const response = await fetch('http://3.37.235.43:8000/api/talk', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -167,7 +167,7 @@ app.get('/api/characters/:movieId', async (req, res) => {
     const { movieId } = req.params;
     try {
         // Python 서버로 요청
-        const response = await fetch(`http://127.0.0.1:8000/characters/${movieId}`);
+        const response = await fetch(`http://3.37.235.43:8000/characters/${movieId}`);
         
         if (!response.ok) {
             return res.json({ characters: [] }); // 에러 시 빈 배열 반환
@@ -204,7 +204,7 @@ app.post('/login_process', (req, res) => {
 
 // --- 서버 실행 ---
 app.listen(port, () => {
-    console.log(`Movie AI 서버가 http://127.0.0.1:${port} 에서 실행 중입니다.`);
+    console.log(`Movie AI 서버가 http://3.37.235.43:${port} 에서 실행 중입니다.`);
     console.log('--- 등록된 라우트 ---');
     console.log('GET /');
     console.log('GET /login');

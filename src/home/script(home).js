@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 로그인/로그아웃 로직 끝 
 
 
-    const SERVER_API_URL = 'http://localhost:3000/api/search';
+    const SERVER_API_URL = 'http://3.37.235.43:8000/api/search';
 
     /**
      * '내 서버'(/api/search)에 영화 데이터를 요청하는 함수
