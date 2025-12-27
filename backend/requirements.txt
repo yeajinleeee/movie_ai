@@ -10,4 +10,3 @@ pydantic
 python-dotenv
 python-multipart
 numpy
-scikit-learn
