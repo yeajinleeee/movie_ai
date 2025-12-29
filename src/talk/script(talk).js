@@ -380,7 +380,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 finalImg = DEFAULT_PROFILE_IMG;
             }
             
-            // (중요) 여기에 '고반장' if문이 없어야 합니다!
 
             chatContainer.innerHTML = `
                 <div class="chat-header" style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #ddd;">
