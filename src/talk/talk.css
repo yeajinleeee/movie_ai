@@ -73,6 +73,11 @@ button {
     border: 1px solid #e0e0e0;
     background-color: white;
     color: #333;
+    
+    /* ▼ 이 부분이 정렬 맞추는 핵심입니다 */
+    margin-top: 0; 
+    display: inline-flex;
+    align-items: center; 
 }
 
 .profile-section {
@@ -97,8 +102,6 @@ button {
     border: 1px solid #ccc;
     border-radius: 25px;
     overflow: hidden;
-    background-color: #fff;
-    height: 50px;
 }
 
 .search-bar input {
@@ -208,13 +211,13 @@ button {
 .movie-card {
     display: flex;
     background-color: white;
-    border-radius: 12px; /* 둥글기 수정 */
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     border: 1px solid #eee;
     
-    /* 높이를 늘려서 프로필 공간 확보 (기존 180px -> 230px) */
-    height: 230px; 
+    /* ▼ 고정 height를 지우고 min-height로 변경 */
+    min-height: 220px; 
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -233,12 +236,9 @@ button {
 
 .movie-info {
     flex: 1;
-    padding: 15px 20px;
-    
-    /* 텍스트(위)와 프로필(아래)를 양 끝으로 배치 */
+    padding: 20px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
+    flex-direction: column; /* 내용물을 세로로 배치 */
 }
 
 /* 상단 정보 (제목, 설명) */
@@ -350,12 +350,14 @@ button {
 }
 
 .chat-header {
-    background: #333;
+    background: #222;
     color: white;
-    padding: 15px;
+    padding: 15px 20px;
+    
+    /* ▼ 수직 중앙 정렬 핵심 코드 */
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; 
 }
 
 .movie-badge {
@@ -461,9 +463,9 @@ button {
 /* 프로필 가로 나열 */
 .char-list {
     display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    padding: 2px;
+    gap: 15px;  /* 2명 사이 간격을 적당히 벌림 */
+    align-items: flex-start; /* 위쪽 기준 정렬 */
+    /* flex-wrap 속성 제거함 (한 줄 유지) */
 }
 
 /* 개별 캐릭터 (사진+이름) */
@@ -472,7 +474,7 @@ button {
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    width: 60px; /* 크기 고정 */
+    width: 60px; /* 이름이 길어도 정렬 안 깨지게 폭 고정 */
 }
 
 /* 프로필 사진 (원형) */
