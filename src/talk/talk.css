@@ -337,17 +337,19 @@ button {
     top: 0; 
     left: 0;
     width: 100%; 
-    height: 100vh; /* 화면 전체 높이 */
+    height: 100vh;
     background: rgba(0, 0, 0, 0.6);
-    z-index: 9999; /* 제일 위에 뜨도록 */
+    z-index: 9999;
     
-    /* ★ 중앙 정렬 핵심 코드 ★ */
-    display: flex !important; /* display: flex 강제 적용 */
+    /* display: flex만 남기고 !important는 뺍니다 */
+    display: flex; 
     justify-content: center;  /* 가로 중앙 */
     align-items: center;      /* 세로 중앙 */
 }
 
-.chat-modal.hidden { display: none; }
+.chat-modal.hidden { 
+    display: none !important; 
+}
 
 .chat-container {
     width: 400px;
