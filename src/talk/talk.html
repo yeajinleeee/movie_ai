@@ -1,42 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>대본너머</title>
-<link rel="stylesheet" href="/src/talk/talk.css">
-<script type="module" src="/src/talk/script(talk).js" defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대본너머</title>
+    <link rel="stylesheet" href="/src/talk/talk.css">
+    <script type="module" src="/src/talk/script(talk).js" defer></script>
 </head>
-
-<div id="chat-modal" class="chat-modal hidden">
-        <div class="chat-container">
-            <div class="chat-header">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <img id="chat-header-img" src="" alt="프로필" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; background:#fff;">
-                    
-                    <h2 id="chat-character-name" style="margin: 0;">캐릭터이름</h2>
-            </div>
-
-    <span id="chat-movie-title" style="font-size: 0.8em; color: #eee;">영화제목</span>
-
-    <button id="close-chat-btn" style="background:none; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
-</div>
-
-            <div id="chat-messages" class="chat-messages">
-                <div class="message bot">
-                    <div class="bubble">안녕하세요! 대화를 시작해보세요.</div>
-                </div>
-            </div>
-
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="말을 걸어보세요..." autocomplete="off">
-                <button id="send-btn">전송</button>
-            </div>
-        </div>
-    </div>
-    </body>
-</html>
-
 <body>
     <div class="main-container">
         <header class="header">
@@ -63,7 +33,7 @@
             <div class="search-bar">
                 <input type="text" placeholder="등장 인물, 배우 이름, 영화 제목 검색" id="talk-search-input">
                 <button type="submit">
-                    <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M21 21L16.65 16.65" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -74,7 +44,6 @@
 
     <div class="page-wrapper talk-layout">
         <main class="main-content">
-            
             <section class="filters">
                 <div class="filter-group" id="year-filter">
                     <button>2004 - 2006</button>
@@ -98,12 +67,39 @@
             <section class="results-section">
                 <h2>검색 결과</h2>
                 <div class="results-grid">
-                </div> 
+                    </div> 
             </section>
         </main>
 
         <aside class="sidebar">
             <button class="search-button">영화 검색</button>
         </aside>
-    </div> </body>
+    </div>
+
+    <div id="chat-modal" class="chat-modal hidden">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img id="chat-header-img" src="" alt="프로필">
+                    <div style="display:flex; flex-direction:column;">
+                        <h2 id="chat-character-name" style="margin: 0; font-size:16px;">캐릭터이름</h2>
+                        <span id="chat-movie-title" style="font-size: 12px; color: #ccc;">영화제목</span>
+                    </div>
+                </div>
+                <button id="close-chat-btn">&times;</button>
+            </div>
+
+            <div id="chat-messages" class="chat-messages">
+                <div class="message bot">
+                    <div class="bubble">안녕하세요! 대화를 시작해보세요.</div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="말을 걸어보세요..." autocomplete="off">
+                <button id="send-btn">전송</button>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

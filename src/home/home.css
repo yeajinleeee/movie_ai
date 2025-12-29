@@ -130,73 +130,98 @@ button {
 /* ----- 장르 탭 ----- */
 .genre-tabs {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
+    gap: 12px; /* 버튼 사이 간격 넓힘 */
+    margin-bottom: 25px; /* 탭과 영화 목록 사이 여백 확보 */
+    border-bottom: none; /* 지저분해 보이는 하단 긴 회색 선 제거 */
+    flex-wrap: wrap; /* 화면이 작아지면 줄바꿈 */
 }
 
 .tab-button {
-    padding: 10px 15px;
-    font-size: 16px;
+    padding: 8px 18px; /* 버튼 내부 여백 */
+    font-size: 14px;
     font-weight: 500;
-    color: #888;
-    border-bottom: 3px solid transparent;
+    color: #666;
+    background-color: white;
+    border: 1px solid #e0e0e0; /* 연한 테두리 */
+    border-radius: 20px; /* 둥근 캡슐 모양 */
+    transition: all 0.2s ease; /* 부드러운 전환 효과 */
+    cursor: pointer;
+}
+
+/* 마우스 올렸을 때 */
+.tab-button:hover {
+    background-color: #f5f5f5;
+    color: #333;
+    border-color: #ccc;
 }
 
 .tab-button.active {
-    color: #007bff;
-    border-bottom-color: #007bff;
+    background-color: #333; /* 진한 배경 (또는 원하시는 브랜드 컬러) */
+    color: white; /* 글자색 흰색 */
+    border-color: #333;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 살짝 그림자 */
 }
 
 /* ----- 영화 슬라이더 ----- */
 .slider-container {
     position: relative;
+    padding: 10px 0; /* 위아래 여백을 주어 그림자가 잘리거나 답답해 보이지 않게 함 */
 }
 
 .slider-frame {
-    overflow: hidden; /* 이 프레임 밖의 콘텐츠를 숨김 */
+    overflow: hidden; 
+    padding: 0 5px; /* 양옆 여백 살짝 추가 */
 }
 
 .movie-list-wrapper {
     display: flex;
-    gap: 40px; /* 카드 사이의 간격 */
+    gap: 20px; /* 카드 간격 조정 (너무 넓으면 산만해 보임) */
     transition: transform 0.3s ease-in-out;
 }
 
 .movie-card {
     flex: 0 0 auto; 
     width: 180px; 
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: transparent; /* 흰색 배경 제거 */
+    box-shadow: none; /* 카드 전체 테두리 그림자 제거 */
+    border-radius: 0; /* 카드 자체 둥글기 제거 (이미지에만 적용) */
 }
 
 .movie-card img {
     width: 100%;
     height: 255px; 
-    object-fit: cover; /* 이미지 꽉 채우기 */
-    display: block;    /* 이미지 하단 공백 제거 */
+    object-fit: cover; 
+    display: block;    
     margin: 0; 
-    background-color: #eee; 
+    background-color: transparent; /* 회색 배경 제거 (투명하게) */
+    border-radius: 12px; /* 포스터 모서리를 둥글게 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* 포스터에만 은은한 그림자 추가 */
+    transition: transform 0.2s ease; /* 마우스 올렸을 때 효과 준비 */
+}
+
+/* (선택 사항) 마우스 올리면 포스터가 살짝 떠오르는 효과 */
+.movie-card:hover img {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .movie-card .movie-title {
-    font-size: 15px;
-    font-weight: bold;
-    padding: 10px 10px; /* 상하 여백 통일 */
+    font-size: 16px; /* 폰트 크기 살짝 키움 */
+    font-weight: 600; /* 두께 조정 */
+    padding: 12px 2px 4px 2px; /* 상단 여백 추가, 좌우 여백 축소 */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
-    text-align: center; /* 제목: 가로 중앙 정렬 */
-    color: #333;
+    text-align: left; /* 왼쪽 정렬로 변경하여 더 깔끔하게 */
+    color: #222; /* 글자색 조금 더 진하게 */
 }
 
 .movie-card .movie-info {
     font-size: 13px;
-    color: #666;
-    padding: 0 10px 12px 10px; /* 하단 패딩 확보 */
-    text-align: center; /* 설명글: 제목과 맞춰서 중앙 정렬 (기존 left에서 변경) */
+    color: #888;
+    padding: 0 2px 10px 2px;
+    text-align: left; /* 설명글도 왼쪽 정렬 */
 }
 
 /* 슬라이더 화살표 */
