@@ -59,29 +59,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const talkSearchButton = document.querySelector('.search-bar button'); 
     const gridContainer = document.querySelector('.results-grid'); 
 
-    // ========== 3. 영화 카드 HTML 생성 ==========
+// ========== 3. 영화 카드 HTML 생성 ==========
     function createMovieCardHTML(movie) {
         
-        const posterUrl = (movie.posters && movie.posters.split('|')[0] !== "")
-                ? movie.posters.split('|')[0]
-                : '/src/public/image/no_image.jpeg';
+        // 1. 포스터 이미지 안전하게 처리 (home.js 방식)
+        let posterUrl = '/src/public/image/no_image.jpeg'; // 기본값
 
+        if (movie.posters && typeof movie.posters === 'string' && movie.posters.trim() !== '') {
+            const splitPosters = movie.posters.split('|');
+            if (splitPosters.length > 0 && splitPosters[0].trim() !== '') {
+                posterUrl = splitPosters[0].trim();
+            }
+        }
+
+        // 2. 제목 정제 (!HS, !HE 태그 제거)
         const cleanTitle = movie.title
             .replace(/!HS|!HE/g, '')
-            .replace(/\(.*\)/g, '')
-            .trim();
-        
+            .replace(/^\s+|\s+$/g, '') // 앞뒤 공백 제거
+            .replace(/ +/g, ' ');       // 다중 공백 하나로
+
+        // 3. 줄거리 처리
         let plotText = '줄거리 정보가 없습니다.';
         if (movie.plots && movie.plots.plot && movie.plots.plot.length > 0) {
             plotText = movie.plots.plot[0].plotText;
         }
 
-        const mappedId = movieMap[cleanTitle];
+        const mappedId = movieMap[cleanTitle.replace(/\s/g, '')] || movieMap[cleanTitle]; // 공백 제거 후 매핑 확인 시도
         
-        // ★ [변경점] 버튼을 바로 못 만드니, 버튼이 들어갈 '빈 공간(Container)'을 만들어둡니다.
+        // 4. 버튼 영역 (로딩 전)
         let actionHtml = '';
         if (mappedId) {
-            // 나중에 JS가 여기에 버튼을 채워 넣습니다.
             actionHtml = `<div class="char-loading-area" 
                                 data-movie-id="${mappedId}" 
                                 data-movie-title="${cleanTitle}"
@@ -89,20 +96,33 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span style="font-size:12px; color:gray;">캐릭터 확인 중...</span>
                         </div>`;
         } else {
-            actionHtml = `<button class="talk-btn disabled" disabled style="margin-top:10px; width:100%;">🚫 대화 데이터 없음</button>`;
+            actionHtml = `<button class="talk-btn disabled" disabled style="margin-top:10px; width:100%; cursor: not-allowed; opacity: 0.6;">🚫 대화 데이터 없음</button>`;
         }
 
+        // 5. HTML 반환 (img 태그에 onerror 추가됨)
         return `
             <div class="movie-card">
-                <img src="${posterUrl}" alt="${cleanTitle} 포스터" class="movie-poster">
+                <img src="${posterUrl}" 
+                    alt="${cleanTitle} 포스터" 
+                    class="movie-poster"
+                    onerror="this.onerror=null; this.src='/src/public/image/no_image.jpeg';">
                 <div class="movie-info">
                     <h3>${cleanTitle} (${movie.prodYear})</h3>
                     <p><strong>장르:</strong> ${movie.genre || '정보 없음'}</p>
-                    <p class="plot-text"><strong>줄거리:</strong> ${plotText.substring(0, 80)}...</p>
+                    <p class="plot-text"><strong>줄거리:</strong> ${plotText.substring(0, 80)}${plotText.length > 80 ? '...' : ''}</p>
                     ${actionHtml}
                 </div>
             </div>
         `;
+    }
+
+    //배열 섞는 함수
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 
     // ========== 4. 영화 검색 및 표시 ==========
@@ -120,6 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!movies || movies.length === 0) {
                 gridContainer.innerHTML = `<p style="color:white; padding:20px;">검색된 영화가 없습니다.</p>`;
                 return;
+            }
+
+            if (movies && Array.isArray(movies)) {
+                shuffleArray(movies);
             }
 
             // 1. 영화 카드들을 먼저 화면에 싹 그립니다.
@@ -195,21 +219,125 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     // ========== 5. 이벤트 리스너 ==========
-    if (talkSearchButton) {
-        talkSearchButton.addEventListener('click', () => {
-            const query = talkSearchInput.value.trim();
-            if (query) fetchAndDisplayMovies(`/api/search?title=${encodeURIComponent(query)}`);
+    let selectedGenre = '';
+    let selectedYearStart = '';
+    let selectedYearEnd = '';
+    
+    //필터 버튼 클릭 이벤트 설정 함수 
+    function setupFilterButtons() {
+        const yearButtons = document.querySelectorAll('#year-filter button');
+        const genreButtons = document.querySelectorAll('#genre-filter button');
+        
+        yearButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                //클릭된 버튼 확실하게 가져오기 위함 
+                const clickedBtn = e.currentTarget;
+
+                //이미 선택된 거라면 취소 기능
+                if (clickedBtn.classList.contains('active')) {
+                    clickedBtn.classList.remove('active');
+                    selectedYearStart = '';
+                    selectedYearEnd = '';
+                } else {
+                    //다른 버튼들 선택 해제
+                    yearButtons.forEach(b => b.classList.remove('active'));
+                    //현재 버튼 선택
+                    clickedBtn.classList.add('active');
+
+                    //텍스트에서 시작 년도 추출
+                    const text = clickedBtn.innerText;
+                    const years = text.match(/\d{4}/g);
+                    if (years && years.length >= 2) {
+                        selectedYearStart = years[0];
+                        selectedYearEnd = years[1];
+                    } else if (years && years.lenght === 1) {
+                        selectedYearStart = years[0];
+                        selectedYearEnd = years[0];
+                    }
+                }
+            });
+        });
+
+        //장르 버튼들
+        genreButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+
+                const clickedBtn = e.currentTarget;
+
+                if (clickedBtn.classList.contains('active')){
+                    clickedBtn.classList.remove('active');
+                    selectedGenre = '';
+                } else {
+                    genreButtons.forEach(b => b.classList.remove('active'));
+                    clickedBtn.classList.add('active');
+                    selectedGenre = clickedBtn.innerText.trim();
+                }
+            });
         });
     }
+
+    //통합 검색 함수
+    function performSearch() {
+        const titleInput = document.getElementById('talk-search-input');
+        const title = titleInput ? titleInput.value.trim() : '';
+
+        //url 파라미터 생성
+        const params = new URLSearchParams();
+
+        //검색어 
+        if (title) params.append('title', title);
+
+        //장르
+        if (selectedGenre) params.append('genre', selectedGenre);
+
+        //연도
+        if (selectedYearStart && selectedYearEnd) {
+            // 시작일: 해당 년도 1월 1일
+            params.append('releaseDts', `${selectedYearStart}0101`);
+            // 종료일: 해당 년도 12월 31일
+            params.append('releaseDte', `${selectedYearEnd}1231`);
+        }
+
+        //정렬
+        params.append('sort', 'prodYear,1');
+        
+        //한번에 가져올 개수
+        params.append('listCount', '20');
+
+        //api 호출 
+        const finalUrl = `/api/search?${params.toString()}`;
+        console.log('검색 요청:', finalUrl);
+
+        fetchAndDisplayMovies(finalUrl)
+    }
+
+        //실행
+        //필터 버튼 세팅
+        setupFilterButtons();
     
-    if (talkSearchInput) {
-        talkSearchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
+        //상단 검색바 돋보기 버튼 
+        if (talkSearchButton) {
+            talkSearchButton.addEventListener('click', () => {
                 const query = talkSearchInput.value.trim();
                 if (query) fetchAndDisplayMovies(`/api/search?title=${encodeURIComponent(query)}`);
-            }
-        });
-    }
+            });
+        }
+
+        //상단 검색바 엔터키
+        if (talkSearchInput) {
+            talkSearchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const query = talkSearchInput.value.trim();
+                    if (query) fetchAndDisplayMovies(`/api/search?title=${encodeURIComponent(query)}`);
+                }
+            });
+        }
+
+        //하단 필터 영역의 영화 검색 버튼 
+        const filterSearchBtn = document.querySelector('.search-button');
+        if (filterSearchBtn) {
+            filterSearchBtn.addEventListener('click', performSearch);
+        }
 
     // 초기 로드
     fetchAndDisplayMovies(`/api/search?sort=prodYear,1&listCount=50`);

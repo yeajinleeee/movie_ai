@@ -65,39 +65,66 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
     /**
      * 영화 데이터를 받아 HTML 카드를 생성하고 슬라이더에 삽입
      * @param {HTMLElement} wrapper - 카드가 삽입될 .movie-list-wrapper 요소
      * @param {Array} movies - 서버로부터 받은 영화 목록
      */
     function displayMovies(wrapper, movies) {
-        wrapper.innerHTML = ''; // 기존 콘텐츠 비우기
+        wrapper.innerHTML = ''; // 화면 비우기
 
-        if (!movies || movies.length === 0) {
-            wrapper.innerHTML = '<p style="padding: 20px; color: #888;">영화를 찾을 수 없습니다.</p>';
+        // 1. movies 데이터 자체가 없는 경우 처리
+        if (!movies || !Array.isArray(movies) || movies.length === 0) {
+            wrapper.innerHTML = '<p style="padding: 20px; color: #888;">표시할 영화 데이터가 없습니다.</p>';
             return;
         }
 
         movies.forEach(movie => {
-            // KMDb v2 API의 포스터 응답 형식 (쉼표(,)로 구분될 수 있음)
-            const posterUrl = (movie.posters && movie.posters.split(',')[0] !== '') 
-                ? movie.posters.split(',')[0] 
-                : '/src/public/image/no_image.jpeg'; // 기본 이미지
-            
-            const title = movie.title.replace(/!HS|!HE/g, ''); // 하이라이팅 태그 제거
-            const prodYear = movie.prodYear;
-            const genre = movie.genre; // KMDb v2는 genre를 쉼표로 구분
+            try {
+                // --- 데이터 안전 처리 시작 ---
+                
+                // 제목이 없을 경우를 대비해 기본값 설정
+                let title = (movie.title || '제목 없음').replace(/!HS|!HE/g, '').trim();
 
-            // home.css와 디자인 시안에 맞는 HTML 구조
-            const cardHtml = `
-                <div class="movie-card">
-                    <a href="#">
-                        <img src="${posterUrl}" alt="${title} 포스터" onerror="this.src='/src/public/image/no_image.jpeg'; this.onerror=null;"
-                        <p class="movie-title">${title}</p>
-                    </a>
-                </div>
-            `;
-            wrapper.insertAdjacentHTML('beforeend', cardHtml);
+                // 포스터 처리 (데이터가 없거나, null이거나, 비어있을 때 완벽 방어)
+                let posterUrl = '/src/public/image/no_image.jpeg'; // 기본 이미지 경로 (경로 확인 필요)
+                
+                // posters 데이터가 확실히 문자열로 존재할 때만 처리
+                if (movie.posters && typeof movie.posters === 'string' && movie.posters.trim() !== '') {
+                    // 파이프(|)로 쪼개고 첫 번째 주소 가져오기
+                    const splitPosters = movie.posters.split('|');
+                    if (splitPosters.length > 0 && splitPosters[0].trim() !== '') {
+                        posterUrl = splitPosters[0].trim();
+                    }
+                }
+
+                // --- HTML 생성 ---
+                const cardHtml = `
+                    <div class="movie-card">
+                        <a href="#">
+                            <img src="${posterUrl}" 
+                                alt="${title}"
+                                onerror="this.onerror=null; this.src='/src/public/image/no_image.jpeg';"
+                            >
+                            <p class="movie-title">${title}</p>
+                        </a>
+                    </div>
+                `;
+                
+                wrapper.insertAdjacentHTML('beforeend', cardHtml);
+
+            } catch (error) {
+                // 특정 영화 데이터가 이상해도 멈추지 않고 에러만 기록 후 다음 영화로 넘어감
+                console.error('영화 데이터 처리 중 오류 발생:', movie, error);
+            }
         });
     }
 
@@ -170,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!section) return; // 해당 섹션이 없으면 종료
 
         const wrapper = section.querySelector('.movie-list-wrapper');
-        wrapper.innerHTML = '<p style="padding: 20px; color: #888;">최신 영화 로딩 중...</p>';
+        wrapper.innerHTML = '<p style="padding: 20px; color: #888;">영화 로딩 중...</p>';
         
         // '내 서버'에 최신순(prodYear,1) + 2023년 이후 개봉작 요청
         const movies = await fetchMoviesFromServer({ 
@@ -178,6 +205,12 @@ document.addEventListener('DOMContentLoaded', () => {
             listCount: 50,
             releaseDts: '20230101',
         });
+
+        if (movies && Array.isArray(movies)) {
+            shuffleArray(movies);
+        }
+
+
         
         displayMovies(wrapper, movies); // 영화 카드 표시
         setupSlider(section); // 슬라이더 기능 적용
@@ -200,6 +233,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 genre: genre, 
                 sort: 'prodYear,1' 
             });
+
+            if (movies && Array.isArray(movies)) {
+                shuffleArray(movies);
+            }
             
             displayMovies(wrapper, movies); // 영화 카드 표시
             setupSlider(section); // (중요) 새 카드가 로드될 때마다 슬라이더 재설정

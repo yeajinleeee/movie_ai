@@ -18,6 +18,8 @@ a {
 
 ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 button {
@@ -51,9 +53,9 @@ button {
 
 .header .navigation ul {
     display: flex;
-    gap: 30px;
+    gap: 80px;       /* 넓직하게 60px로 변경 (취향에 따라 80px까지도 괜찮습니다) */
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 500; /* 글씨도 살짝 진하게 하면 더 보기 좋습니다 */
 }
 
 .header .login-button a,
@@ -164,9 +166,10 @@ button {
 }
 
 /* ----- 영화 슬라이더 ----- */
+
 .slider-container {
     position: relative;
-    padding: 10px 0; /* 위아래 여백을 주어 그림자가 잘리거나 답답해 보이지 않게 함 */
+    padding:0 ; /* 위아래 여백을 주어 그림자가 잘리거나 답답해 보이지 않게 함 */
 }
 
 .slider-frame {
@@ -176,13 +179,13 @@ button {
 
 .movie-list-wrapper {
     display: flex;
-    gap: 20px; /* 카드 간격 조정 (너무 넓으면 산만해 보임) */
+    gap: 28px; /* 카드 간격 조정 (너무 넓으면 산만해 보임) */
     transition: transform 0.3s ease-in-out;
 }
 
 .movie-card {
     flex: 0 0 auto; 
-    width: 180px; 
+    width: 170px; 
     background-color: transparent; /* 흰색 배경 제거 */
     box-shadow: none; /* 카드 전체 테두리 그림자 제거 */
     border-radius: 0; /* 카드 자체 둥글기 제거 (이미지에만 적용) */
@@ -207,14 +210,22 @@ button {
 }
 
 .movie-card .movie-title {
-    font-size: 16px; /* 폰트 크기 살짝 키움 */
-    font-weight: 600; /* 두께 조정 */
-    padding: 12px 2px 4px 2px; /* 상단 여백 추가, 좌우 여백 축소 */
-    white-space: nowrap;
+    display: block;           /* 블록 요소로 변경하여 여백 제어 */
+    font-size: 16px;          /* 크기 유지 또는 15px로 살짝 줄여도 좋음 */
+    font-weight: 400;         /* 두께를 600 -> 700으로 더 진하게 */
+    color: #222;              /* 완전 검정보다 살짝 부드러운 검정 */
+    
+    /* 핵심: 여백과 정렬 수정 */
+    margin-top: 12px;         /* 포스터와 제목 사이 여백 추가 (이게 제일 중요) */
+    margin-bottom: 4px;       /* 제목과 설명 사이 간격 */
+    padding: 0;           /* 불필요한 상하 패딩 제거, 좌우만 살짝 */
+    text-align: left;         /* 왼쪽 정렬이 시선의 흐름상 훨씬 깔끔합니다 */
+    
+    /* 텍스트 말줄임 처리 */
+    white-space: nowrap;      
     overflow: hidden;
-    text-overflow: ellipsis; 
-    text-align: left; /* 왼쪽 정렬로 변경하여 더 깔끔하게 */
-    color: #222; /* 글자색 조금 더 진하게 */
+    text-overflow: ellipsis;
+    letter-spacing: -0.5px;   /* 자간을 살짝 좁혀서 단단해 보이는 느낌 줌 */
 }
 
 .movie-card .movie-info {
